@@ -9,19 +9,28 @@ import styles from './LoginForm.styles';
 
 const LoginForm = (props) => {
   const { classes } = props;
-  const { email, password } = props;
+  const { email, password, error } = props;
   const { handleEmail, handlePassword, submit } = props;
+
+  const errorMessage = error
+  ? (
+    <Typography
+      className={classes.errorMessage}
+      variant="body1"
+      align="center"
+    > {error.message}
+    </Typography>
+    )
+  : null;
 
   return (
     <Paper className={classes.root}>
       <form className={classes.form}>
         <Typography
-          align="center"
           variant="h5"
-        >
-          Single Sign-On
+          align="center"
+        > Sign In
         </Typography>
-        <div className={classes.divider}/>
         <FormControl>
           <TextField
             id="email"
@@ -43,8 +52,18 @@ const LoginForm = (props) => {
           />
         </FormControl>
         <Button
+          className={classes.login}
           onClick={submit}
+          variant="outlined"
         > Log In
+        </Button>
+        <div>
+          {errorMessage}
+        </div>
+        <div className={classes.divider}/>
+        <Button
+          className={classes.register}
+        > Register
         </Button>
       </form>
     </Paper>
