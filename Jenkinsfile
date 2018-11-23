@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Test') {
       steps {
-        sh 'sudo npm test'
+        sh 'npm test'
       }
     }
   }
