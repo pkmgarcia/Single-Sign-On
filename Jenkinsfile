@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Test') {
       steps {
-        sh 'set CI=true&&npm test'
+        sh 'npm test -- --coverage'
       }
     }
   }
