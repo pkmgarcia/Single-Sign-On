@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Test') {
       steps {
-        sh 'npm test'
+        sh 'set CI=test&&npm test'
       }
     }
   }
