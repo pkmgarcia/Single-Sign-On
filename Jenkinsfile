@@ -11,5 +11,10 @@ pipeline {
         sh 'npm test -- --coverage'
       }
     }
+    stage('Deploy') {
+      steps {
+        sh 'npm run build'
+      }
+    }
   }
 }
