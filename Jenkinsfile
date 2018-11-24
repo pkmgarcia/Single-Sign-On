@@ -3,7 +3,6 @@ pipeline {
   stages {
     stage('Install') {
       steps {
-        sh 'whoami'
         dir(path: 'client') {
           sh 'npm install'
         }
@@ -18,9 +17,18 @@ pipeline {
 
       }
     }
-    stage('Deploy') {
+    stage('Build') {
       steps {
         sh 'npm run build'
+        dir(path: 'client') {
+          sh 'npm run build'
+        }
+
+      }
+    }
+    stage('Deploy') {
+      steps {
+        sh 'sudo pm2 start npm -- start'
       }
     }
   }
