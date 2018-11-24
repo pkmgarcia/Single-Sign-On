@@ -8,7 +8,6 @@ pipeline {
   stages {
     stage('Install') {
       steps {
-        sh 'groups'
         dir(path: 'client') {
           sh 'npm install'
         }
