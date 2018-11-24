@@ -9,11 +9,11 @@ pipeline {
     stage('Install') {
       steps {
         sh 'pwd'
+        sh 'whoami'
         dir(path: 'client') {
           sh 'npm install'
         }
 
-        sh 'whoami'
       }
     }
     stage('Test') {
