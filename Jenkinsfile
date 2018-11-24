@@ -8,8 +8,7 @@ pipeline {
   stages {
     stage('Install') {
       steps {
-        sh 'pwd'
-        sh 'whoami'
+        sh 'groups'
         dir(path: 'client') {
           sh 'npm install'
         }
