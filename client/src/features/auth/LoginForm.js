@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './LoginForm.styles';
 
+import { initiateTwitterOAuth } from '../../modules/axios/twitter';
+
 const LoginForm = (props) => {
   const { classes } = props;
   const { email, password, error } = props;
@@ -63,6 +65,7 @@ const LoginForm = (props) => {
         <div className={classes.divider}/>
         <Button
           className={classes.register}
+          onClick={initiateTwitterOAuth}
         > Register
         </Button>
       </form>

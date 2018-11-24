@@ -42,11 +42,11 @@ class AuthLayout extends Component {
           <div className={classes.description}>
               <Typography
                 variant="h1"
-              > Payroll
+              > Single Sign-On
               </Typography>
               <Typography
                 variant="h5"
-              > A new way to interact with your salary history!
+              > Access multiple applications with <strong>one</strong> set of credentials
               </Typography>
           </div>
         </Hidden>
