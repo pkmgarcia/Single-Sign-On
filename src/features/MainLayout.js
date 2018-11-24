@@ -45,7 +45,8 @@ class MainLayout extends Component {
           position="static"
         >
           <Toolbar
-            className={classes.toolbar}>
+            className={classes.toolbar}
+          >
             <IconButton
               onClick={this.toggleDrawer}
               className={classes.menuButton}

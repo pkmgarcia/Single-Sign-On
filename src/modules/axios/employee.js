@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { baseURL } from './config';
 
+const api = 'mysql'
+
 const employeeInstance = axios.create({
-  baseURL: baseURL + '/employee'
+  baseURL: `${baseURL}/${api}/employee`
 });
 
 const getEmployee = emp_no => employeeInstance.get(`/${emp_no}`);
