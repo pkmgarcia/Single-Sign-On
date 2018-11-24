@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'node:8.12.0-stretch'
+    }
+
+  }
   stages {
     stage('Install') {
       steps {
