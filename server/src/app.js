@@ -1,5 +1,7 @@
 const config = require('./config');
 const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
@@ -10,6 +12,12 @@ const passport = require('./passport');
 
 const routes = require('./routes');
 const app = express();
+
+app.use('/Single-Sign-On', express.static(path.join(__dirname, 'build')));
+
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 // Set up middleware
 app.use(cors());
