@@ -2,11 +2,20 @@ pipeline {
   agent any
   stages {
     stage('Install') {
-      steps {
-        dir(path: 'client') {
-          sh 'npm install'
-        }
+      parallel {
+        stage('Install') {
+          steps {
+            dir(path: 'client') {
+              sh 'npm install'
+            }
 
+          }
+        }
+        stage('test') {
+          steps {
+            sh 'which pm2'
+          }
+        }
       }
     }
     stage('Test') {
