@@ -8,6 +8,7 @@ pipeline {
   stages {
     stage('Install') {
       steps {
+        sh 'pwd'
         dir(path: 'client') {
           sh 'npm install'
         }
