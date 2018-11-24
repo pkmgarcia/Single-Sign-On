@@ -19,7 +19,6 @@ pipeline {
     }
     stage('Build') {
       steps {
-        sh 'npm run build'
         dir(path: 'client') {
           sh 'npm run build'
         }
