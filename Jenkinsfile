@@ -3,12 +3,19 @@ pipeline {
   stages {
     stage('Install') {
       steps {
-        sh 'npm install'
+        sh 'whoami'
+        dir(path: 'client') {
+          sh 'npm install'
+        }
+
       }
     }
     stage('Test') {
       steps {
-        sh 'npm test -- --coverage'
+        dir(path: 'client') {
+          sh 'npm test -- --coverage'
+        }
+
       }
     }
     stage('Deploy') {
