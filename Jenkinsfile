@@ -9,7 +9,7 @@ pipeline {
     stage('Install') {
       steps {
         dir(path: 'client') {
-          sh 'npm install'
+          sh 'npm install --verbose'
         }
 
       }
