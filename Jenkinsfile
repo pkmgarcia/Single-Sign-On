@@ -13,7 +13,7 @@ pipeline {
         }
         stage('test') {
           steps {
-            sh 'which npm'
+            sh 'which pm2'
           }
         }
       }
