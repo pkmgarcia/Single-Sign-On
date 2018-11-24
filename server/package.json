@@ -1,0 +1,27 @@
+{
+  "name": "single-sign-on-backend",
+  "version": "0.0.0",
+  "description": "Backend for the Single Sign-On system.",
+  "main": "index.js",
+  "scripts": {
+    "start": "ENV=dev node src/app.js",
+    "start:dev": "ENV=dev node src/app.js",
+    "start:prod": "ENV=prod node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Patrick Garcia",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "mysql": "^2.16.0",
+    "passport": "^0.4.0",
+    "passport-azure-ad": "^4.0.0",
+    "passport-twitter": "^1.0.4",
+    "twitter": "^1.7.1"
+  },
+  "devDependencies": {}
+}

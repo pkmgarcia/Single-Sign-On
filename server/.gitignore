@@ -1,0 +1,9 @@
+# node modules
+/node_modules
+
+# dotenv
+.env
+
+# pem
+cert.pem
+key.pem
