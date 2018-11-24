@@ -25,10 +25,5 @@ pipeline {
 
       }
     }
-    stage('Deploy') {
-      steps {
-        sh 'sudo pm2 start npm -- start'
-      }
-    }
   }
 }
