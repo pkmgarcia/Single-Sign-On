@@ -1,5 +1,6 @@
 #!/bin/bash
 
-export JENKINS_NODE_COOKIE=dontKillMe
-npm start
 
+cd ../server
+export JENKINS_NODE_COOKIE=dontKillMe
+pm2 start npm -- start
