@@ -1,12 +1,18 @@
 const passport = require('passport');
 const strategies = require('./strategies');
+const db = require('../db');
 
 passport.serializeUser(function(user, cb) {
-  cb(null, user);
+  cb(null, user.empNo);
 });
-
-passport.deserializeUser(function(obj, cb) {
-  cb(null, obj);
+passport.deserializeUser(function(empNo, cb) {
+  const statement = 'SELECT * FROM employees WHERE emp_no=' + empNo;
+  db.query(statement,
+    function(err, tuples) {
+      cb(err, tuples[0]);
+    }
+  );
+  cb(null, false);
 });
 
 // MySql Auth

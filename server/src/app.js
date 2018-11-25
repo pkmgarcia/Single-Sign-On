@@ -1,6 +1,5 @@
 const config = require('./config');
 const express = require('express');
-const bodyParser = require('body-parser');
 const path = require('path');
 const http = require('http');
 const https = require('https');
@@ -22,6 +21,8 @@ app.get('/', function (req, res) {
 // Set up middleware
 app.use(cors());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(session({
   resave: true,
   saveUninitialized: true,
@@ -34,12 +35,14 @@ app.use(passport.session());
 // Set up routes
 // Auth
 app.use('/auth', routes.auth);
+// The rest of the React app
+app.use('/Single-Sign-On/', passport.authenticate('local', { failureRedirect: '/login' }
 // AAD
-app.use('/aad', routes.aad);
+app.use('/auth/aad', routes.aad);
 // mySQL
-app.use('/mysql', routes.mysql);
+app.use('/auth/mysql', routes.mysql);
 // Twitter
-app.use('/twitter', routes.twitter);
+app.use('/auth/twitter', routes.twitter);
 
 // Start listening
 // Http

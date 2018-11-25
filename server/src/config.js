@@ -8,13 +8,13 @@ var serverHost = '',
 const env = process.env.ENV;
 switch (env) {
   case 'dev':
-    serverHost = process.env.SERVER_HOST;
+    serverHost = process.env.DEV_SERVER_HOST;
     serverPort = process.env.SERVER_PORT;
     clientHost = process.env.DEV_CLIENT_HOST;
     clientPort = process.env.DEV_CLIENT_PORT;
     break;
   case 'dev':
-    serverHost = process.env.SERVER_HOST;
+    serverHost = process.env.PROD_SERVER_HOST;
     serverPort = process.env.SERVER_PORT;
     clientHost = process.env.PROD_CLIENT_HOST;
     clientPort = process.env.PROD_CLIENT_PORT;
