@@ -9,6 +9,8 @@ passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
 
+// MySql Auth
+passport.use(strategies.signInStrategy);
 // Azure AD OIDC Strategy
 passport.use(strategies.oidcStrategy);
 // Azure AD Bearer Token Strategy
