@@ -3,7 +3,6 @@ pipeline {
   stages {
     stage('Install') {
       steps {
-        sh './scripts/clean.sh'
         dir(path: 'client') {
           sh 'npm install --verbose'
         }
@@ -29,6 +28,7 @@ pipeline {
     stage('Deploy') {
       steps {
         dir(path: 'scripts') {
+          sh './clean.sh'
           sh './transfer.sh'
           sh './deliver.sh'
         }
