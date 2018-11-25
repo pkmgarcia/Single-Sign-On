@@ -6,7 +6,7 @@ const styles = theme => ({
     alignItems: 'center',
     width: '100%',
     height: '100%',
-    backgroundImage: `linear-gradient(#ffffff, ${theme.palette.secondary.main})`,
+    backgroundImage: theme.palette.primary.main,
     overflow: 'hidden'
   },
   description: {
