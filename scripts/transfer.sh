@@ -1,4 +1,5 @@
 #!/bin/bash
 
-cp -r ../client/build ../server/build
+rm -r ../server/build
 
+cp -r ../client/build ../server
