@@ -27,7 +27,7 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        dir(path: 'scripts') {
+        dir(path: 'client') {
           sh './transfer.sh'
           sh './deliver.sh'
         }
