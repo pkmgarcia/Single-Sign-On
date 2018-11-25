@@ -7,12 +7,10 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './LoginForm.styles';
 
-import { initiateTwitterOAuth } from '../../modules/axios/twitter';
-
 const LoginForm = (props) => {
   const { classes } = props;
-  const { email, password, error } = props;
-  const { handleEmail, handlePassword, submit } = props;
+  const { empNo, password, error } = props;
+  const { handleEmpNo, handlePassword, submit } = props;
 
   const errorMessage = error
   ? (
@@ -35,12 +33,12 @@ const LoginForm = (props) => {
         </Typography>
         <FormControl>
           <TextField
-            id="email"
-            label="Email"
-            type="email"
-            value={email}
+            id="empNo"
+            label="Employee Number"
+            type="text"
+            value={empNo}
             variant="outlined"
-            onChange={event => handleEmail(event.target.value)}
+            onChange={event => handleEmpNo(event.target.value)}
           />
         </FormControl>
         <FormControl>
@@ -62,12 +60,6 @@ const LoginForm = (props) => {
         <div>
           {errorMessage}
         </div>
-        <div className={classes.divider}/>
-        <Button
-          className={classes.register}
-          onClick={initiateTwitterOAuth}
-        > Register
-        </Button>
       </form>
     </Paper>
   )

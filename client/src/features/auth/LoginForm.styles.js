@@ -27,12 +27,6 @@ const styles = theme => ({
   },
   errorMessage: {
     color: theme.palette.error.main
-  },
-  divider: {
-    width: '95%',
-    height: '1px',
-    padding: 0,
-    backgroundColor: 'silver'
   }
 });
 

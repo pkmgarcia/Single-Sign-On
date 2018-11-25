@@ -3,14 +3,14 @@ import LoginForm from './LoginForm';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
 import styles from './AuthLayout.styles';
-import { auth } from '../../modules/firebase';
+import { signIn } from '../../modules/axios/auth';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { userTypes } from '../../modules/redux/reducers/user';
 
 class AuthLayout extends Component {
   state = {
-    email: '',
+    empNo: '',
     password: ''
   }
 
@@ -20,20 +20,12 @@ class AuthLayout extends Component {
         [key]: value
       });
     },
-    submit: () => {
-      auth.signInWithEmailAndPassword(this.state.email, this.state.password)
-        .then(user => {
-          this.props.setUser(user);
-        })
-        .catch(error => {
-          this.setState({ error });
-        });
-    }
+    submit: (empNo, password) => signIn(this.state.empNo, this.state.password)
   }
 
   render() {
     const { classes } = this.props;
-    const { email, password, error } = this.state;
+    const { empNo, password, error } = this.state;
     const { handlers } = this;
 
     return (
@@ -51,10 +43,10 @@ class AuthLayout extends Component {
           </div>
         </Hidden>
         <LoginForm
-          email={email}
+          empNo={empNo}
           password={password}
           error={error}
-          handleEmail={handlers.handleChange('email')}
+          handleEmpNo={handlers.handleChange('empNo')}
           handlePassword={handlers.handleChange('password')}
           submit={handlers.submit}
         />
