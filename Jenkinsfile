@@ -3,6 +3,7 @@ pipeline {
   stages {
     stage('Install') {
       steps {
+        sh './scripts/clean.sh'
         dir(path: 'client') {
           sh 'npm install --verbose'
         }
