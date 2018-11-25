@@ -1,4 +1,4 @@
-# Single Sign-On [![Build Status](https://travis-ci.com/pkmgarcia/Single-Sign-On.svg?token=zBR7qz5xLHkSpAsLPYyN&branch=master)](https://travis-ci.com/pkmgarcia/Single-Sign-On)
+# Single Sign-On
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
