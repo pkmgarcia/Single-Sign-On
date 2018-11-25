@@ -2,4 +2,4 @@
 
 rm -r ../server/build
 
-cp -r ../client/build ../server
+cp -r ../client/build ../server/src
