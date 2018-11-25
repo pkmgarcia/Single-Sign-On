@@ -28,7 +28,6 @@ pipeline {
     stage('Deploy') {
       steps {
         dir(path: 'scripts') {
-          sh './clean.sh'
           sh './transfer.sh'
           sh './deliver.sh'
         }
