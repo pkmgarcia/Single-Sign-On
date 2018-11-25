@@ -2,11 +2,23 @@ pipeline {
   agent any
   stages {
     stage('Install') {
-      steps {
-        dir(path: 'client') {
-          sh 'npm install --verbose'
-        }
+      parallel {
+        stage('Install') {
+          steps {
+            dir(path: 'client') {
+              sh 'npm install --verbose'
+            }
 
+          }
+        }
+        stage('') {
+          steps {
+            dir(path: 'server') {
+              sh 'npm install'
+            }
+
+          }
+        }
       }
     }
     stage('Test') {
