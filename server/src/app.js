@@ -13,8 +13,8 @@ const passport = require('./passport');
 const routes = require('./routes');
 const app = express();
 
+// React
 app.use('/Single-Sign-On', express.static(path.join(__dirname, 'build')));
-
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
@@ -32,6 +32,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Set up routes
+// Auth
+app.use('/auth', routes.auth);
+// AAD
 app.use('/aad', routes.aad);
 // mySQL
 app.use('/mysql', routes.mysql);
@@ -39,7 +42,6 @@ app.use('/mysql', routes.mysql);
 app.use('/twitter', routes.twitter);
 
 // Start listening
-
 // Http
 // http.createServer(PORT).listen(PORT);
 
@@ -52,4 +54,3 @@ const sslOptions = {
 https.createServer(sslOptions, app).listen(process.env.SERVER_PORT, () => {
   console.log('Listening');
 });
-
