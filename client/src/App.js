@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Switch,
+  Route
+} from 'react-router-dom';
 import MainLayout from './features/MainLayout';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
@@ -8,31 +12,21 @@ import AuthLayout from './features/auth/AuthLayout';
 import theme from './modules/theme';
 import styles from './App.styles';
 import { connect } from 'react-redux';
-import { auth } from './modules/firebase';
 import { userTypes } from './modules/redux/reducers/user';
 
 class App extends Component {
-  componentDidMount() {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.props.setUser(user);
-      }
-    })
-  }
-
   render() {
     const { classes } = this.props;
-
-    const layout = this.props.user
-      ? <MainLayout/>
-      : <AuthLayout />
 
     return (
       <CssBaseline>
         <MuiThemeProvider theme={theme}>
           <BrowserRouter>
             <div className={classes.root}>
-              {layout}
+              <Switch>
+                <Route path="/main" component={MainLayout}></Route>
+                <Route path="/" component={AuthLayout}></Route>
+              </Switch>
             </div>
           </BrowserRouter>
         </MuiThemeProvider>
