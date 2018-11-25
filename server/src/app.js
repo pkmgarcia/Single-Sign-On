@@ -36,7 +36,7 @@ app.use(passport.session());
 // Auth
 app.use('/auth', routes.auth);
 // The rest of the React app
-app.use('/Single-Sign-On/', passport.authenticate('local', { failureRedirect: '/login' }
+app.use('/Single-Sign-On/', passport.authenticate('local', { failureRedirect: 'login' });
 // AAD
 app.use('/auth/aad', routes.aad);
 // mySQL
