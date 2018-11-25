@@ -6,12 +6,12 @@ pipeline {
         stage('Install') {
           steps {
             dir(path: 'client') {
-              sh 'npm install --verbose'
+              sh 'npm install'
             }
 
           }
         }
-        stage('') {
+        stage('Install') {
           steps {
             dir(path: 'server') {
               sh 'npm install'
