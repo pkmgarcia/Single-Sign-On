@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter,
-  Switch,
-  Route
-} from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import MainLayout from './features/MainLayout';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
@@ -18,15 +14,16 @@ class App extends Component {
   render() {
     const { classes } = this.props;
 
+    const layout = this.props.user
+      ? <MainLayout />
+      : <AuthLayout />;
+
     return (
       <CssBaseline>
         <MuiThemeProvider theme={theme}>
           <BrowserRouter>
             <div className={classes.root}>
-              <Switch>
-                <Route path="/main" component={MainLayout}></Route>
-                <Route path="/" component={AuthLayout}></Route>
-              </Switch>
+              {layout}
             </div>
           </BrowserRouter>
         </MuiThemeProvider>

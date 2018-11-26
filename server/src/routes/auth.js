@@ -2,9 +2,9 @@ const router = require('express').Router();
 const passport = require('../passport');
 
 router.post('/login',
-  passport.authenticate('local', { failureRedirect: '/Single-Sign-On/login' }),
+  passport.authenticate('local', { failureRedirect: '/' }),
   function(req, res) {
-    res.redirect('/Single-Sign-On/main');
+    res.json(req.user);
   }
 );
 

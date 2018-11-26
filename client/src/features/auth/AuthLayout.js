@@ -20,7 +20,10 @@ class AuthLayout extends Component {
         [key]: value
       });
     },
-    submit: (empNo, password) => signIn(this.state.empNo, this.state.password)
+    submit: (empNo, password) => {
+      signIn(this.state.empNo, this.state.password)
+        .then(res => this.props.setUser(res));
+    }
   }
 
   render() {

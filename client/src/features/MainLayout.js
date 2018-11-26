@@ -14,7 +14,6 @@ import TwitterLayout from './twitter/TwitterLayout';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './MainLayout.styles';
 import { Drawer } from '@material-ui/core';
-import { auth } from '../modules/firebase';
 import { userTypes } from '../modules/redux/reducers/user';
 import { connect } from 'react-redux';
 
@@ -30,10 +29,6 @@ class MainLayout extends Component {
   }
 
   logout = () => {
-    auth.signOut()
-      .then(() => {
-        this.props.deleteUser();
-      })
   }
 
   render() {
