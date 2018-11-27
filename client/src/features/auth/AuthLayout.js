@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import LoginForm from './LoginForm';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
@@ -8,54 +8,30 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { userTypes } from '../../modules/redux/reducers/user';
 
-class AuthLayout extends Component {
-  state = {
-    empNo: '',
-    password: ''
-  }
+const authLayout = (props) => {
+  const { classes } = props;
 
-  handlers ={
-    handleChange: key => value => {
-      this.setState({
-        [key]: value
-      });
-    },
-    submit: (empNo, password) => {
-      signIn(this.state.empNo, this.state.password)
-        .then(res => this.props.setUser(res));
-    }
-  }
+  const signedIn = () => signIn().then(res => this.props.setUser(res));
 
-  render() {
-    const { classes } = this.props;
-    const { empNo, password, error } = this.state;
-    const { handlers } = this;
-
-    return (
-      <div className={classes.root}>
-        <Hidden smDown>
-          <div className={classes.description}>
-              <Typography
-                variant="h1"
-              > Single Sign-On
-              </Typography>
-              <Typography
-                variant="h5"
-              > Access multiple applications with <strong>one</strong> set of credentials
-              </Typography>
-          </div>
-        </Hidden>
-        <LoginForm
-          empNo={empNo}
-          password={password}
-          error={error}
-          handleEmpNo={handlers.handleChange('empNo')}
-          handlePassword={handlers.handleChange('password')}
-          submit={handlers.submit}
-        />
-      </div>
-    )
-  }
+  return (
+    <div className={classes.root}>
+      <Hidden smDown>
+        <div className={classes.description}>
+          <Typography
+            variant="h1"
+          > Single Sign-On
+          </Typography>
+          <Typography
+            variant="h5"
+          > Access multiple applications through Microsoft's Azure Active Directory
+          </Typography>
+        </div>
+      </Hidden>
+      <LoginForm
+        signIn={signedIn}
+      />
+    </div>
+  );
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -65,4 +41,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   null,
   mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(AuthLayout));
+)(withStyles(styles, { withTheme: true })(authLayout));

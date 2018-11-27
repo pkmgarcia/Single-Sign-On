@@ -18,6 +18,11 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
+
 // Set up middleware
 app.use(cors());
 app.use(cookieParser());
@@ -33,16 +38,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Set up routes
-// Auth
-app.use('/auth', routes.auth);
 // The rest of the React app
-app.use('/main', passport.authenticate('local', { failureRedirect: '/' }));
-// AAD
-app.use('/auth/aad', routes.aad);
+app.use('/aad', routes.aad);
 // mySQL
-app.use('/auth/mysql', routes.mysql);
+app.use('/mysql', passport.authenticate('azuread-openidconnect', routes.mysql));
 // Twitter
-app.use('/auth/twitter', routes.twitter);
+app.use('/twitter', routes.twitter);
 
 // Start listening
 // Http

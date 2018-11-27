@@ -1,5 +1,5 @@
 // Set up Azure AD config
-const serverHost = process.env.SERVER_HOST;
+let serverHost = process.env.PROD_SERVER_HOST;
 const serverPort = process.env.SERVER_PORT;
 let clientHost = '';
 let clientPort = '';
@@ -7,10 +7,12 @@ let clientPort = '';
 // Set host/ports based on root dotenv
 switch (process.env.ENV) {
   case 'dev':
+    serverHost = process.env.DEV_SERVER_HOST;
     clientHost = process.env.DEV_CLIENT_HOST;
     clientPort = process.env.DEV_CLIENT_PORT;
     break;
   case 'prod':
+    serverHost = process.env.PROD_SERVER_HOST;
     clientHost = process.env.PROD_CLIENT_HOST;
     clientPort = process.env.PROD_CLIENT_PORT;
     break;
@@ -31,15 +33,15 @@ const oidcConfig = {
   clientID: process.env.AZURE_AD_CLIENT_ID,
   responseType: 'code',
   responseMode: 'form_post',
-  redirectUrl: 'https://localhost:3000/',
+  redirectUrl: 'https://' + serverHost + ':' + serverPort + '/aad/auth/openid/callback',
   allowHttpForRedirectUrl: false,
   clientSecret: process.env.AZURE_AD_CLIENT_SECRET,
   validateIssuer: false,
   isB2C: false,
   issuer: null,
-  passReqToCallback: false,
+  passReqToCallback: true,
   scope: ['profile'],
-  loggingLevel: 'info',
+  // loggingLevel: 'info',
   nonceLifetime: null,
   nonceMaxAmount: 5,
   // useCookieInsteadOfSession: true,

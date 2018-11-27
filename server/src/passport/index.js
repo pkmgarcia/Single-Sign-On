@@ -2,25 +2,19 @@ const passport = require('passport');
 const strategies = require('./strategies');
 const db = require('../db');
 
-passport.serializeUser(function(user, cb) {
-  cb(null, user.empNo);
+// Serialize/Deserialize using 
+passport.serializeUser(function(employee, done) {
+  done(null, employee.oid);
 });
-passport.deserializeUser(function(empNo, cb) {
-  const statement = 'SELECT * FROM employees WHERE emp_no=' + empNo;
-  db.query(statement,
-    function(err, tuples) {
-      cb(err, tuples[0]);
-    }
-  );
-  cb(null, false);
+passport.deserializeUser(function(oid, done) {
+  const employee = db.getEmployeeFromOID(oid);
+
+  // No need to check if employee was fetched since employee == false if it didn't work
+  return done(null, employee);
 });
 
-// MySql Auth
-passport.use(strategies.signInStrategy);
 // Azure AD OIDC Strategy
 passport.use(strategies.oidcStrategy);
-// Azure AD Bearer Token Strategy
-passport.use(strategies.bearerStrategy);
 // Twitter Passport
 passport.use(strategies.twitterStrategy);
 

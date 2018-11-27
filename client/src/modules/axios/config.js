@@ -1,6 +1,6 @@
 const protocol = 'https';
-const host = '10.0.0.100';
-const port = '8000';
+const host = '98.207.137.133';
+const port = '8080';
 const baseURL = port
   ? `${protocol}://${host}:${port}`
   : `${protocol}://${host}`;

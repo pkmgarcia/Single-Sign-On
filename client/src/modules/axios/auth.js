@@ -1,17 +1,14 @@
 import axios from 'axios';
-import { baseURL } from './config';
 
-const api = 'auth'
+const api = '/aad';
 
 const authAxios = axios.create({
-  baseURL: `${baseURL}/${api}`
+  baseURL: api
 });
 
-const signIn = (empNo, password) => authAxios.post('/login', {
-  empNo,
-  password
-});
+const signIn = () => authAxios.get('/login');
 
 export {
   signIn
 };
+
