@@ -13,15 +13,18 @@ const oidcCallback = (req, iss, sub, profile, accessToken, refreshToken, done) =
   }
 
   // Try to find user in database
-  const employee = db.getEmployeeUsingOID(profile.oid);
+  db.getEmployeeUsingOID(profile.oid)
+    .then(employee => {
+      console.log(employee);
 
-  // Add oid to employee if its not there
-  if (!employee) {
-    db.addOIDToEmployee(profile.oid, employee.empNo);
-    employee.oid = profile.oid;
-  }
+      // Add oid to employee if its not there
+      if (!employee) {
+        db.addOIDToEmployee(profile.oid, employee.empNo);
+        employee.oid = profile.oid;
+      }
 
-  return done(null, employee);
+      return done(null, employee);
+    });
 };
 
 const OIDCStrategy = require('passport-azure-ad').OIDCStrategy;

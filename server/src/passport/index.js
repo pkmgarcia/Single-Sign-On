@@ -7,10 +7,12 @@ passport.serializeUser(function(employee, done) {
   done(null, employee.oid);
 });
 passport.deserializeUser(function(oid, done) {
-  const employee = db.getEmployeeFromOID(oid);
-
-  // No need to check if employee was fetched since employee == false if it didn't work
-  return done(null, employee);
+  db.getEmployeeUsingOID(oid)
+    .then(employee => {
+      // No need to check if employee was fetched since employee == false if it didn't work
+      return done(null, employee);
+    }
+  );
 });
 
 // Azure AD OIDC Strategy

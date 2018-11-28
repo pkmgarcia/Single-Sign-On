@@ -9,15 +9,16 @@ const connection = mysql.createConnection({
 connection.connect();
 
 const getEmployeeUsingOID = (oid) => {
-  const statement = `SELECT * FROM employees WHERE oid='${oid}'`;
-
-  connection.query(statement,
-    function(err, tuples) {
+  return new Promise((resolve, reject) => {
+    console.log(`Fetching ${oid}`);
+    const statement = `SELECT * FROM employees WHERE oid='${oid}'`;
+  
+    connection.query(statement, (err, tuples) => {
       // Database error
-      if (err) return false;
+      if (err) reject(err);
 
       // Incorrect amount of users
-      if(tuples.length !== 1) return false;
+      if(tuples.length !== 1) reject(false);
 
       // Get employee
       const tuple = tuples[0];
@@ -30,12 +31,9 @@ const getEmployeeUsingOID = (oid) => {
         hireDate: tuple.hire_date,
         oid
       };
-
-      return employee;
-    }
-  );
-
-  return false;
+      resolve(employee);
+    });
+  })
 };
 
 const addOIDToEmployee = (oid, empNo) => {
