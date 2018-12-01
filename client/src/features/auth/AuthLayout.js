@@ -1,9 +1,10 @@
 import React from 'react';
 import LoginForm from './LoginForm';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import Hidden from '@material-ui/core/Hidden';
 import styles from './AuthLayout.styles';
-import { signIn } from '../../modules/axios/auth';
+import { signIn, getMe } from '../../modules/axios/auth';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { userTypes } from '../../modules/redux/reducers/user';
@@ -11,7 +12,20 @@ import { userTypes } from '../../modules/redux/reducers/user';
 const authLayout = (props) => {
   const { classes } = props;
 
-  const signedIn = () => signIn().then(res => this.props.setUser(res));
+  const signedIn = () => {
+    signIn()
+      .then(res => {
+        this.props.setUser(res);
+      }
+    );
+  };
+
+  const test = () => {
+    getMe()
+      .then(res => {
+        console.log(res);
+      });
+  };
 
   return (
     <div className={classes.root}>

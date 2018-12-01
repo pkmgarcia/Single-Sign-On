@@ -2,16 +2,29 @@ const graph = require('@microsoft/microsoft-graph-client');
 
 const user = {
   getMe: (accessToken) => {
-    const client = getAuthenticatedClient(accessToken);
+    return new Promise((resolve, reject) => {
+      const client = getAuthenticatedClient(accessToken);
 
-    const user = client.api('/me').get();
-    return user;
+      const user = client
+        .api('/me')
+        .get((err, res) => {
+          if (err) {
+            console.log(`[graph] getMe error: ${JSON.stringify(err)}`);
+            reject(err);
+          }
+          else {
+            console.log(`[graph] getMe found ${res}`);
+            resolve(res);
+          }
+        }
+      );
+    });
   }
 };
 
 const superadmin = {
   getUsers: (accessToken) => {
-    const client = getAuthenticated
+    const client = getAuthenticatedClient(accessToken);
   }
 };
 
@@ -26,5 +39,6 @@ function getAuthenticatedClient(accessToken) {
       done(null, accessToken);
     }
   });
+  return client;
 }
 

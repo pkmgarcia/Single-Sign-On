@@ -9,8 +9,19 @@ import theme from './modules/theme';
 import styles from './App.styles';
 import { connect } from 'react-redux';
 import { userTypes } from './modules/redux/reducers/user';
+import { getMe } from './modules/axios/auth';
 
 class App extends Component {
+  componentDidMount() {
+    getMe()
+      .then(res => {
+        if (res) {
+          this.props.setUser(res);
+        }
+      }
+    );
+  }
+
   render() {
     const { classes } = this.props;
 
