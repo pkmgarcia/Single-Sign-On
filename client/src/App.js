@@ -4,12 +4,12 @@ import MainLayout from './features/MainLayout';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { withStyles } from '@material-ui/core/styles';
-import AuthLayout from './features/auth/AuthLayout';
+import SplashLayout from './features/splash/SplashLayout';
 import theme from './modules/theme';
 import styles from './App.styles';
 import { connect } from 'react-redux';
 import { userTypes } from './modules/redux/reducers/user';
-import { getMe } from './modules/axios/auth';
+import { signIn, getMe } from './modules/axios/auth';
 
 class App extends Component {
   componentDidMount() {
@@ -17,6 +17,9 @@ class App extends Component {
       .then(res => {
         if (res) {
           this.props.setUser(res);
+        }
+        else {
+          signIn();
         }
       }
     );
@@ -27,7 +30,7 @@ class App extends Component {
 
     const layout = this.props.user
       ? <MainLayout />
-      : <AuthLayout />;
+      : <SplashLayout />;
 
     return (
       <CssBaseline>
