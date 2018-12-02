@@ -11,7 +11,7 @@ const oauth2 = require('simple-oauth2').create({
     secret: process.env.AZURE_AD_CLIENT_SECRET
   },
   auth: {
-    tokenHost: 'https://login.microsoftonline.com/common', // oauth authority
+    tokenHost: 'https://login.microsoftonline.com/' + process.env.AZURE_AD_TENANT_NAME,
     authorizePath: '/oauth2/v2.0/authorize',
     tokenPath: '/oauth2/v2.0/token'
   }

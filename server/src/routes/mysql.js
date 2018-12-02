@@ -11,5 +11,14 @@ router.get('/employee/:emp_no', function (req, res) {
   });
 });
 
+// Read
+router.get('/employee/:emp_no', function (req, res) {
+  const statement = 'SELECT * FROM employees WHERE emp_no=' + req.params.emp_no;
+
+  db.query(statement, function (err, result) {
+    res.send(result);
+  });
+});
+
 module.exports = router;
 

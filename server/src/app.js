@@ -20,6 +20,7 @@ app.get('/', function (req, res) {
 
 app.all('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
@@ -31,18 +32,17 @@ app.use(express.json());
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  secret: 'super secret'
+  secret: 'super secret',
+  unset: 'destroy'
 }));
 // Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Set up routes
-// The rest of the React app
+app.use('/graph', routes.graph);
 app.use('/aad', routes.aad);
-// mySQL
 app.use('/mysql', passport.authenticate('azuread-openidconnect', routes.mysql));
-// Twitter
 app.use('/twitter', routes.twitter);
 
 // Start listening

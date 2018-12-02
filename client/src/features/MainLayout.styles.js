@@ -7,7 +7,12 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'space-between'
   },
-
+  menuButton: {
+    color: 'white'
+  },
+  logoutButton: {
+    color: 'white'
+  }
 });
 
 export default styles

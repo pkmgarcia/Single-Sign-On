@@ -37,7 +37,7 @@ const config = {
   scope: ['profile'],
   clockSkew: null,
   loggingLevel: 'error',
-  resourceURL: 'https://graph.microsoft.com'
+  resourceURL: 'https://graph.microsoft.net'
 }
 
 const bearerConfig = {

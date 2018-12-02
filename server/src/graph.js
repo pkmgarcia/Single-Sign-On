@@ -13,7 +13,7 @@ const user = {
             reject(err);
           }
           else {
-            console.log(`[graph] getMe found ${res}`);
+            console.log(`[graph] getMe found ${res.oid}`);
             resolve(res);
           }
         }

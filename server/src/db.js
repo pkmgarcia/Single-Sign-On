@@ -62,7 +62,6 @@ const addOIDToEmployee = (oid, empNo) => {
 };
 
 const addOAuthToEmployee = (token, empNo) => {
-  console.log(token);
   let statement = 'UPDATE employees SET '
     + 'token_type=\'' + token.token_type + '\', '
     + 'expires_in=\'' + token.expires_in + '\', '
@@ -72,8 +71,6 @@ const addOAuthToEmployee = (token, empNo) => {
     + 'refresh_token=\'' + token.refresh_token + '\', '
     + 'id_token=\'' + token.id_token + '\' '
     + 'WHERE emp_no=' + empNo;
-
-  console.log(statement);
 
   connection.query(statement,
     function(err, tuples) {

@@ -16,11 +16,12 @@ authAxios.interceptors.response.use(response => {
 });
 
 const signIn = () => authAxios.get('/login');
-
+const signOut = () => authAxios.get('/logout');
 const getMe = () => authAxios.get('/me');
 
 export {
   signIn,
+  signOut,
   getMe
 };
 
