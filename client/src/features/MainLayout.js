@@ -16,8 +16,6 @@ import TwitterLayout from './twitter/TwitterLayout';
 import { withStyles } from '@material-ui/core/styles';
 import { signOut } from '../modules/axios/auth';
 import styles from './MainLayout.styles';
-import { userTypes } from '../modules/redux/reducers/user';
-import { connect } from 'react-redux';
 
 class MainLayout extends Component {
   state = {
@@ -37,7 +35,6 @@ class MainLayout extends Component {
         this.props.history.push('/logout');
       })
   }
-
 
   render() {
     const { classes } = this.props;
@@ -87,12 +84,4 @@ class MainLayout extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  deleteUser:  () => dispatch({ type: userTypes.SET_USER, user: null })
-});
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(withRouter(MainLayout)));
-
+export default withStyles(styles, { withTheme: true })(withRouter(MainLayout));

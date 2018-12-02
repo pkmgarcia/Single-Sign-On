@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
-import { signIn } from '../../modules/axios/auth';
 import styles from './LogoutLayout.styles';
 
 const logoutLayout = (props) => {

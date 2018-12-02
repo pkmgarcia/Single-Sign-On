@@ -3,7 +3,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
-import { signIn } from '../../modules/axios/auth';
 import { getMe } from '../../modules/axios/graph';
 import { userTypes } from '../../modules/redux/reducers/user';
 import { connect } from 'react-redux';
@@ -90,5 +89,5 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   null,
   mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(SplashLayout));
+)(withWidth()(withStyles(styles, { withTheme: true })(SplashLayout)));
 

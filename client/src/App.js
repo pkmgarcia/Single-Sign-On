@@ -20,7 +20,7 @@ class App extends Component {
     const { classes } = this.props;
 
     const layout = () => (this.props.user
-      ? <MainLayout />
+      ? <MainLayout user={this.props.user}/>
       : <SplashLayout setUser={this.props.setUser}/>
     );
 
@@ -45,11 +45,11 @@ const mapStateToProps = state => ({
   user: state.userReducer.user
 });
 const mapDispatchToProps = dispatch => ({
-  setUser: user => dispatch({ type: userTypes.SET_USER, user })
-})
+  setUser: user => dispatch({ type: userTypes.SET_USER, user }),
+  deleteUser:  () => dispatch({ type: userTypes.SET_USER, user: null })
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withStyles(styles)(App));
-
