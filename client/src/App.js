@@ -19,6 +19,7 @@ class App extends Component {
   render() {
     const { classes } = this.props;
 
+    /*
     const layout = () => (this.props.user
       ? (<MainLayout
            user={this.props.user}
@@ -26,15 +27,13 @@ class App extends Component {
          />)
       : <SplashLayout setUser={this.props.setUser}/>
     );
-
-    /*
+    */
     const defaultUser = {
       empNo: '100000',
       firstName: 'Patrick',
       lastName: 'Garcia'
     };
     const layout = () => <MainLayout user={defaultUser} deleteUser={this.props.deleteUser} />;
-    */
 
     return (
       <CssBaseline>
