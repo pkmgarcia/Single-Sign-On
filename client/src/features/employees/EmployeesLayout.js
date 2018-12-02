@@ -28,7 +28,7 @@ class EmployeesLayout extends Component {
   handleChange = (key) => (value) => this.setState({ key: value });
   getPreviousEmployees = () => {
     if (this.state.paginationOffset > 4) {
-      const newPaginationOffset = this.state.paginationOffset - 5;
+      const newPaginationOffset = this.state.paginationOffset - 10;
       getEmployees(this.state.paginationOffset)
         .then(res => {
           this.setState({ employees: res });
@@ -37,7 +37,7 @@ class EmployeesLayout extends Component {
     }
   }
   getNextEmployees = () => {
-    const newPaginationOffset = this.state.paginationOffset + 5;
+    const newPaginationOffset = this.state.paginationOffset + 10;
     getEmployees(this.state.paginationOffset)
       .then(res => {
         this.setState({ employees: res });

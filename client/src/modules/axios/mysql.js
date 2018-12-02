@@ -15,7 +15,7 @@ mysqlAxios.interceptors.response.use(response => {
   return response;
 });
 
-const getEmployeeByID = (empNo) => mysqlAxios.get(`/employee/empNo`);
+const getEmployeeByID = (empNo) => mysqlAxios.get(`/employee/${empNo}`);
 
 const getEmployees = (offset) => mysqlAxios.get(`/employees/${offset}`);
 
