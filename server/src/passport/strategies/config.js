@@ -57,9 +57,18 @@ const twitterConfig = {
   callbackURL
 };
 
+// Set up Google Plus config
+const callbackURLGoogle = 'https://' + serverHost + ':' + serverPort + '/auth/google/redirect';
+const googlePlusConfig = {
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURLGoogle
+};
+
 module.exports = {
   aadCredentials,
   oidcConfig,
-  twitterConfig
+  twitterConfig,
+  googlePlusConfig
 };
 

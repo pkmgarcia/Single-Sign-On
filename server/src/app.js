@@ -44,6 +44,8 @@ app.use('/aad', routes.aad);
 app.use('/mysql', passport.authenticate('azuread-openidconnect', routes.mysql));
 // Twitter
 app.use('/twitter', routes.twitter);
+// Google+
+app.use('/google', routes.googlePlus);
 
 // Start listening
 // Http
