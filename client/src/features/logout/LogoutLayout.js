@@ -43,7 +43,7 @@ const logoutLayout = (props) => {
       </Typography>
       <Typography
         align="center"
-        color="inherit"
+        color="secondary"
         noWrap
         gutterBottom
       > You have been signed out.
