@@ -14,9 +14,19 @@ class TwitterLayout extends Component {
   state = {
     tweets: [
       {
-        userName: '',
-        text: '',
-        postdate: ''
+        userName: 'username1',
+        text: 'text-content1',
+        postdate: 'created time1'
+      },
+      {
+        userName: 'username2',
+        text: 'text-content2',
+        postdate: 'created time2'
+      },
+      {
+        userName: 'username3',
+        text: 'text-content3',
+        postdate: 'created time3'
       }
     ]
   }
@@ -45,9 +55,9 @@ class TwitterLayout extends Component {
 
   componentDidMount() {
     getLatestTweets().then(res => {
-      console.log("username", res.data.statuses[0].user.screen_name);
-      console.log("postdate", res.data.statuses[0].created_at);
+      this.setState({userName : res.data.statuses[0].user.screen_name});
       this.setState({text : res.data.statuses[0].text});
+      this.setState({postdate : res.data.statuses[0].created_at});
     });
     // Fetch tweets here
   }
@@ -89,11 +99,20 @@ class TwitterLayout extends Component {
         {this.state.tweets.map((tweet, index) => {
           return (
             <Paper
-              key={index}
+              key={index} elevation="3"
             >
-              {/*HTML/JSX here to display tweets*/}
-                <h6>{tweet.userName}</h6>
-                <p>{tweet.text}</p>
+              <Typography variant="h6" component="h3" color="primary">
+                Tweet: {tweet.text}
+              </Typography>
+              <Typography variant="body1" component="p" color="textPrimary">
+                Posted by: {tweet.userName}
+              </Typography>
+              <Typography component="p">
+                Posted on: {tweet.postdate}
+              </Typography>
+              <Typography component="p">
+                {}
+              </Typography>
             </Paper>
           );
         })}
