@@ -12,7 +12,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
-import { employeeCRUD } from '../../modules/axios';
 import styles from './EmployeesLayout.styles';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
@@ -24,6 +23,26 @@ class EmployeesLayout extends Component {
     paginationOffset: 0,
     query: ''
   }
+
+  /*
+  default = {
+    employees: [
+      {
+        empNo: 0,
+        firstName: 'Patrick',
+        lastName: 'Garcia',
+        department: 'Sales',
+        userPrincipalName: 'pkmgarcia@pkmgarciagmail.onmicrosoft.com'
+      },
+      {
+        empNo: 10,
+        firstName: 'Zubia',
+        lastName: 'Ahmad',
+        department: 'Marketing'
+      }
+    ]
+  };
+  */
 
   handleChange = (key) => (value) => this.setState({ key: value });
   getPreviousEmployees = () => {
@@ -91,7 +110,7 @@ class EmployeesLayout extends Component {
         <TextField
           id="search"
           value={this.state.query}
-          onChange={this.handleChange('query')}
+          onChange={(event) => this.handleChange('query')(event.target.value)}
           variant="outlined"
           margin="normal"
           label="Employee ID"
@@ -107,19 +126,43 @@ class EmployeesLayout extends Component {
       </div>
     );
 
+    /*
+    const employees = this.state.employees.length > 0
+      ? this.state.employees
+      : this.default.employees;
+    */
+
+    const tableBody = (
+      <TableBody>
+        {this.state.employees.map(employee => (
+           <TableRow key={employee.empNo}>
+             <TableCell>{employee.empNo}</TableCell>
+             <Hidden xsDown>
+               <TableCell>{`${employee.lastName}, ${employee.firstName}`}</TableCell>
+               <TableCell>{employee.department}</TableCell>
+             </Hidden>
+             {employee.userPrincipalName
+               ? (<TableCell>{employee.userPrincipalName}</TableCell>)
+               : (<TableCell><Button>Add Account?</Button></TableCell>)
+             }
+           </TableRow>
+        ))}
+      </TableBody>
+    );
     const table = (
       <Paper className={classes.table}>
         <Table>
           <TableHead>
-            <TableCell numeric>ID</TableCell>
-            <Hidden xsDown>
-              <TableCell>Name</TableCell>
-              <TableCell>Department</TableCell>
-            </Hidden>
-            <TableCell>MS Account</TableCell>
+            <TableRow>
+              <TableCell numeric>ID</TableCell>
+              <Hidden xsDown>
+                <TableCell>Name</TableCell>
+                <TableCell>Department</TableCell>
+              </Hidden>
+              <TableCell>MS Account</TableCell>
+            </TableRow>
           </TableHead>
-          <TableBody>
-          </TableBody>
+          {tableBody}
         </Table>
       </Paper>
     );
