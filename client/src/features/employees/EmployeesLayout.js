@@ -24,22 +24,25 @@ class EmployeesLayout extends Component {
     query: ''
   }
 
+  /*
   default = {
     employees: [
       {
         empNo: 0,
         firstName: 'Patrick',
         lastName: 'Garcia',
+        department: 'Sales',
         userPrincipalName: 'pkmgarcia@pkmgarciagmail.onmicrosoft.com'
       },
       {
         empNo: 10,
         firstName: 'Zubia',
         lastName: 'Ahmad',
-        userPrincipalName: 'zubiaahmad@pkmgarciagmail.onmicrosoft.com'
+        department: 'Marketing'
       }
     ]
   };
+  */
 
   handleChange = (key) => (value) => this.setState({ key: value });
   getPreviousEmployees = () => {
@@ -123,6 +126,12 @@ class EmployeesLayout extends Component {
       </div>
     );
 
+    /*
+    const employees = this.state.employees.length > 0
+      ? this.state.employees
+      : this.default.employees;
+    */
+
     const tableBody = (
       <TableBody>
         {this.state.employees.map(employee => (
@@ -133,7 +142,7 @@ class EmployeesLayout extends Component {
                <TableCell>{employee.department}</TableCell>
              </Hidden>
              {employee.userPrincipalName
-               ? (<TableCell>{employee.hasAccount}</TableCell>)
+               ? (<TableCell>{employee.userPrincipalName}</TableCell>)
                : (<TableCell><Button>Add Account?</Button></TableCell>)
              }
            </TableRow>
