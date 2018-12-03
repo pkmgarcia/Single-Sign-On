@@ -142,7 +142,6 @@ class MainLayout extends Component {
         <Switch>
           <Route path="/twitter" component={TwitterLayout}></Route>
           <Route path="/profile" component={GooglePlusLayout}></Route>
-          <Route path="/" component={DashboardLayout}></Route>
           <Route path="/jenkins" component={JenkinsLayout} />
           <Route path="/employees" component={EmployeesLayout} />
           <Redirect exact path="/" to="/twitter"/>

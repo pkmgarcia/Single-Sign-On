@@ -8,7 +8,9 @@ const twitterInstance = axios.create({
 });
 
 const initiateTwitterOAuth = () => twitterInstance.get('/oauth');
+const getLatestTweets = () => twitterInstance.get('/latest-tweets');
 
 export {
-  initiateTwitterOAuth
+  initiateTwitterOAuth,
+  getLatestTweets
 };

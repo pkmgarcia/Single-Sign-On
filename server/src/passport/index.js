@@ -20,7 +20,6 @@ passport.deserializeUser(function(oid, done) {
 
 // Azure AD
 passport.use(strategies.oidcStrategy);
-passport.use(strategies.bearerStrategy);
 // Twitter Passport
 passport.use(strategies.twitterStrategy);
 // Google+ passport
