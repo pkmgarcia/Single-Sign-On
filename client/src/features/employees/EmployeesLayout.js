@@ -44,7 +44,7 @@ class EmployeesLayout extends Component {
   };
   */
 
-  handleChange = (key) => (value) => this.setState({ key: value });
+  handleChange = (key) => (value) => this.setState({ [key]: value });
   getPreviousEmployees = () => {
     if (this.state.paginationOffset > 4) {
       const newPaginationOffset = this.state.paginationOffset - 10;
