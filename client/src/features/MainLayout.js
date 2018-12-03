@@ -2,21 +2,25 @@ import React, { Component } from 'react';
 import {
   Switch,
   Route,
+  NavLink,
+  Redirect,
   withRouter
 } from 'react-router-dom';
+import { Drawer } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import DashboardLayout from './dashboard/DashboardLayout';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 import TwitterLayout from './twitter/TwitterLayout';
 import GooglePlusLayout from './google/GooglePlusLayout';
+import JenkinsLayout from './jenkins/JenkinsLayout';
+import EmployeesLayout from './employees/EmployeesLayout';
 import { withStyles } from '@material-ui/core/styles';
+import { signOut } from '../modules/axios/auth';
 import styles from './MainLayout.styles';
-import { Drawer } from '@material-ui/core';
-import { userTypes } from '../modules/redux/reducers/user';
-import { connect } from 'react-redux';
 
 class MainLayout extends Component {
   state = {
@@ -30,10 +34,80 @@ class MainLayout extends Component {
   }
 
   logout = () => {
+    signOut()
+      .then(() => {
+        this.props.deleteUser();
+        this.props.history.push('/logout');
+      })
   }
 
   render() {
     const { classes } = this.props;
+
+    const employee = this.props.user;
+    const profile = this.props.user
+    ? (<div className={classes.drawerProfile}>
+         <Typography
+           variant="h6"
+           color="primary"
+         > {employee.firstName} {employee.lastName}
+         </Typography>
+         <Typography
+           variant="subtitle1"
+           color="primary"
+         > Emp. No.: {employee.empNo}
+         </Typography>
+       </div>)
+    : null
+
+    const navLinks = (
+      <div className={classes.navLinks}>
+        <NavLink
+          className={classes.navLink}
+          activeClassName={classes.activeNavLink}
+          to="/twitter"
+        >
+          <Button
+            fullWidth
+            color="inherit"
+            variant="flat"
+            onClick={this.toggleDrawer}
+          > Twitter </Button>
+        </NavLink>
+        <NavLink
+          className={classes.navLink}
+          activeClassName={classes.activeNavLink}
+          to="/employees"
+        >
+          <Button
+            fullWidth
+            color="inherit"
+            variant="flat"
+            onClick={this.toggleDrawer}
+          > Employees </Button>
+        </NavLink>
+        <NavLink
+          className={classes.navLink}
+          activeClassName={classes.activeNavLink}
+          to="/jenkins"
+        >
+          <Button
+            fullWidth
+            color="inherit"
+            variant="flat"
+            onClick={this.toggleDrawer}
+          > Jenkins </Button>
+        </NavLink>
+      </div>
+    );
+
+    const drawerContent = (
+      <div className={classes.drawer}>
+        {profile}
+        <Divider />
+        {navLinks}
+      </div>
+    );
 
     return (
       <div className={classes.root}>
@@ -51,31 +125,31 @@ class MainLayout extends Component {
               <MenuIcon />
             </IconButton>
             <Button
-              onClick={this.logout}>
+              onClick={this.logout}
+              className={classes.logoutButton}
+            >
               Log Out
             </Button>
           </Toolbar>
         </AppBar>
         <Drawer
+          anchor="left"
           open={this.state.openDrawer}
           onClose={() => this.setState({ openDrawer: false })}
         >
+          {drawerContent}
         </Drawer>
         <Switch>
           <Route path="/twitter" component={TwitterLayout}></Route>
           <Route path="/profile" component={GooglePlusLayout}></Route>
           <Route path="/" component={DashboardLayout}></Route>
+          <Route path="/jenkins" component={JenkinsLayout} />
+          <Route path="/employees" component={EmployeesLayout} />
+          <Redirect exact path="/" to="/twitter"/>
         </Switch>
       </div>
     )
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  deleteUser:  () => dispatch({ type: userTypes.SET_USER, user: null })
-});
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(withStyles(styles)(withRouter(MainLayout)));
+export default withStyles(styles, { withTheme: true })(withRouter(MainLayout));

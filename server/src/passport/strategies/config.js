@@ -19,34 +19,46 @@ switch (process.env.ENV) {
 }
 
 // Set up Azure AD credentials
+/*
 const identityMetadata = 'https://login.microsoftonline.com/'
   + process.env.AZURE_AD_TENANT_NAME
   + '.onmicrosoft.com/.well-known/openid-configuration';
+*/
+const identityMetadata = 'https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration';
 const aadCredentials = {
   identityMetadata,
   clientID: process.env.AZURE_AD_CLIENT_ID
 };
 
+const config = {
+  ...aadCredentials,
+  validateIssuer: false,
+  issuer: null,
+  scope: ['profile'],
+  clockSkew: null,
+  loggingLevel: 'error',
+  resourceURL: 'https://graph.microsoft.net'
+}
+
+const bearerConfig = {
+  ...config,
+  passReqToCallback: true,
+  audience: 'https://graph.microsoft.net'
+};
+
 // Set up Azure AD OIDC config
 const oidcConfig = {
-  identityMetadata,
-  clientID: process.env.AZURE_AD_CLIENT_ID,
-  responseType: 'code',
+  ...config,
+  passReqToCallback: false,
+  responseType: 'code id_token',
   responseMode: 'form_post',
   redirectUrl: 'https://' + serverHost + ':' + serverPort + '/aad/auth/openid/callback',
   allowHttpForRedirectUrl: false,
   clientSecret: process.env.AZURE_AD_CLIENT_SECRET,
-  validateIssuer: false,
-  isB2C: false,
-  issuer: null,
-  passReqToCallback: true,
-  scope: ['profile'],
-  // loggingLevel: 'info',
   nonceLifetime: null,
   nonceMaxAmount: 5,
   // useCookieInsteadOfSession: true,
   // cookieEncryptionKeys:
-  clockSkew: null
 };
 
 // Set up Twitter config
@@ -66,7 +78,7 @@ const googlePlusConfig = {
 };
 
 module.exports = {
-  aadCredentials,
+  bearerConfig,
   oidcConfig,
   twitterConfig,
   googlePlusConfig

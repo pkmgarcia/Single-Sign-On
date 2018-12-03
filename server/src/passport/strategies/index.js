@@ -1,6 +1,7 @@
 const twitterStrategy = require('./twitter');
 const {
-  oidcStrategy
+  oidcStrategy,
+  bearerStrategy
 } = require('./aad');
 const googlePlusStrategy = require('./googlePlusConfig');
 

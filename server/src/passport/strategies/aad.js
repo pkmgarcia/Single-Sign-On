@@ -1,12 +1,25 @@
+const {
+  oidcConfig,
+  bearerConfig
+} = require('./config');
 const db = require('../../db');
 
-const {
-  aadCredentials,
-  oidcConfig
-} = require('./config');
+// OAuth
+const oauth2 = require('simple-oauth2').create({
+  client: {
+    id: process.env.AZURE_AD_CLIENT_ID,
+    secret: process.env.AZURE_AD_CLIENT_SECRET
+  },
+  auth: {
+    tokenHost: 'https://login.microsoftonline.com/' + process.env.AZURE_AD_TENANT_NAME,
+    authorizePath: '/oauth2/v2.0/authorize',
+    tokenPath: '/oauth2/v2.0/token'
+  }
+});
 
 // OIDC Strategy
-const oidcCallback = (req, iss, sub, profile, accessToken, refreshToken, done) => {
+const oidcCallback = (iss, sub, profile, accessToken, refreshToken, params, done) => {
+  console.log('[OIDC callback]');
   // If user was not authenticated
   if (!profile.oid) {
     return done(new Error("No oid found"), null);
@@ -15,39 +28,47 @@ const oidcCallback = (req, iss, sub, profile, accessToken, refreshToken, done) =
   // Try to find user in database
   db.getEmployeeUsingOID(profile.oid)
     .then(employee => {
-      console.log(employee);
+      if (employee) {
+        // Create a token
+        const oauth = oauth2.accessToken.create(params);
 
-      // Add oid to employee if its not there
-      if (!employee) {
+        // Update access token
         db.addOIDToEmployee(profile.oid, employee.empNo);
-        employee.oid = profile.oid;
-      }
+        db.addOAuthToEmployee(oauth.token, employee.empNo);
 
-      return done(null, employee);
+        employee.oid = profile.oid;
+        employee.oauth = oauth;
+
+        return done(null, employee);
+      }
+      else {
+        return done(new Error("No employee found", null));
+      }
     });
 };
 
 const OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
 const oidcStrategy = new OIDCStrategy(oidcConfig, oidcCallback)
 
-module.exports = {
-  oidcStrategy
-};
-
-/* Old code for authorization
-// BearerToken Strat
-const authenticatedUserTokens = [];
+// BearerToken Strategy
 const BearerStrategy = require('passport-azure-ad').BearerStrategy;
-const bearerStrategy = new BearerStrategy(aadCredentials, (token, done) => {
-  var currentUser = null;
-  var userToken = authenticatedUserTokens.find((user) => {
-    currentUser = user;
-    user.sub === token.sub;
-  });
-  if (!userToken) {
-    authenticatedUserTokens.push(token);
+const bearerStrategy = new BearerStrategy(bearerConfig,
+  (req, token, done) => {
+    db.getEmployeeUsingOID(token.oid)
+      .then(employee => {
+        if (employee) {
+          return done(null, employee);
+        }
+        else {
+          return done(null, false);
+        }
+      }
+    );
   }
-  return done(null, currentUser, token);
-});
-*/
+);
+
+module.exports = {
+  oidcStrategy,
+  bearerStrategy
+};
 
