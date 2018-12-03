@@ -47,9 +47,7 @@ class TwitterLayout extends Component {
     getLatestTweets().then(res => {
       console.log("username", res.data.statuses[0].user.screen_name);
       console.log("postdate", res.data.statuses[0].created_at);
-      this.setState({text : res.data.statuses[0].text}, () => {
-        console.log("text", res.data.statuses[0].text);
-      });
+      this.setState({text : res.data.statuses[0].text});
     });
     // Fetch tweets here
   }
