@@ -10,5 +10,5 @@ const googlePlusStrategy = new Strategy({
   }
 );
 
-exports = googlePlusStrategy;
+module.exports = googlePlusStrategy;
 

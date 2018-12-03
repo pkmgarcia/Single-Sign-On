@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import DashboardLayout from './dashboard/DashboardLayout';
 import TwitterLayout from './twitter/TwitterLayout';
+import GooglePlusLayout from './google/GooglePlusLayout';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './MainLayout.styles';
 import { Drawer } from '@material-ui/core';
@@ -62,6 +63,7 @@ class MainLayout extends Component {
         </Drawer>
         <Switch>
           <Route path="/twitter" component={TwitterLayout}></Route>
+          <Route path="/profile" component={GooglePlusLayout}></Route>
           <Route path="/" component={DashboardLayout}></Route>
         </Switch>
       </div>

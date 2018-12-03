@@ -16,8 +16,8 @@ router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
 });
  
 router.get("/profile", (req, res) => {
-    res.send("Userinfo: " + req.user);
+    res.send("Userinfo: " + req);
 });
 
-exports = router;
+module.exports = router;
 
