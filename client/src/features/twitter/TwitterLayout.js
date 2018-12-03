@@ -14,16 +14,9 @@ class TwitterLayout extends Component {
   state = {
     tweets: [
       {
-        userName: 'username',
-        text: 'text here'
-      },
-      {
-        userName: 'two',
-        text: 'text here'
-      },
-      {
-        userName: 'three',
-        text: 'text here'
+        userName: '',
+        text: '',
+        postdate: ''
       }
     ]
   }
@@ -51,13 +44,12 @@ class TwitterLayout extends Component {
   handleChange = (key) => (value) => this.setState({ key: value });
 
   componentDidMount() {
-    console.log("initial_oauth", initiateTwitterOAuth);
-    initiateTwitterOAuth().then(res => {
-      this.setState({userName : res});
-    });
-    console.log("latest_tweets", getLatestTweets);
     getLatestTweets().then(res => {
-      this.setState({text : res});
+      console.log("username", res.data.statuses[0].user.screen_name);
+      console.log("postdate", res.data.statuses[0].created_at);
+      this.setState({text : res.data.statuses[0].text}, () => {
+        console.log("text", res.data.statuses[0].text);
+      });
     });
     // Fetch tweets here
   }
