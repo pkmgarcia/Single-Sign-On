@@ -15,8 +15,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import TwitterLayout from './twitter/TwitterLayout';
-import GooglePlusLayout from './google/GooglePlusLayout';
-import JenkinsLayout from './jenkins/JenkinsLayout';
 import SalariesLayout from './salaries/SalariesLayout';
 import EmployeesLayout from './employees/EmployeesLayout';
 import { withStyles } from '@material-ui/core/styles';
@@ -105,20 +103,6 @@ class MainLayout extends Component {
                > Employees </Button>
              </NavLink>)
           : null}
-        {employee.departments.find(el => el === 'Development')
-          ? (<NavLink
-               className={classes.navLink}
-               activeClassName={classes.activeNavLink}
-               to="/jenkins"
-             >
-               <Button
-                 fullWidth
-                 color="inherit"
-                 variant="flat"
-                 onClick={this.toggleDrawer}
-               > Jenkins </Button>
-             </NavLink>)
-          : null}
       </div>
     );
 
@@ -163,7 +147,6 @@ class MainLayout extends Component {
         <Switch>
           <Route path="/payroll" render={() => <SalariesLayout user={this.props.user} />} />
           <Route path="/twitter" render={() => <TwitterLayout user={this.props.user} />} />
-          <Route path="/jenkins" render={() => <JenkinsLayout user={this.props.user} />} />
           <Route path="/employees" render={() => <EmployeesLayout user={this.props.user} />} />
           <Redirect exact path="/" to="/payroll"/>
         </Switch>
