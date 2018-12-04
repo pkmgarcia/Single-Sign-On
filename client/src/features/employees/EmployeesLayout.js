@@ -75,7 +75,9 @@ class EmployeesLayout extends Component {
       .then(res => {
         const employees = [];
         if (res.status == 200) {
-          employees.push(res.data);
+          const employee = res.data;
+          employee.department = employee.departments.join(', ');
+          employees.push(employee);
         }
         this.setState({ employees, searched: true });
       });
@@ -148,8 +150,8 @@ class EmployeesLayout extends Component {
               <TableCell>{`${employee.department}`}</TableCell>
             </Hidden>
             <TableCell>
-              {employee.oid
-                ? 'MS Account'
+              {employee.userPrincipleName
+                ? employee.userPrincipleName
                 : <Button onClick={() => createUser(employee.empNo)}>Add Account</Button>
               }
             </TableCell>
@@ -166,7 +168,7 @@ class EmployeesLayout extends Component {
               <TableCell>Name</TableCell>
               <TableCell>Department</TableCell>
             </Hidden>
-            <TableCell>MS Account</TableCell>
+            <TableCell>User Principle Name</TableCell>
           </TableHead>
           {tableBody}
         </Table>

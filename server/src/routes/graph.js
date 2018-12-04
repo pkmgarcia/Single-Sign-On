@@ -46,6 +46,7 @@ router.post('/create',
   function(req, res) {
     if (req.isAuthenticated()) {
       graph.superadmin.createUser(req.body.empNo)
+        .then(result => res.send(result));
     }
   }
 );

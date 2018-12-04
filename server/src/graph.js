@@ -1,31 +1,30 @@
 const graph = require('@microsoft/microsoft-graph-client');
 const db = require('./db');
 const request = require('request');
-const Q = require('q');
 const config = require('./config');
 
 const getAccessToken = function () {
-  let deferred = Q.defer();
-
-  let requestParams = {
-    grant_type: 'client_credentials',
-    client_id: process.env.AZURE_AD_CLIENT_ID,
-    client_secret: process.env.AZURE_AD_CLIENT_SECRET,
-    resource: 'https://graph.microsoft.com'
-  }
-
-  request.post({ url: 'https://login.microsoftonline.com/pkmgarciagmail.onmicrosoft.com/oauth2/token', form: requestParams }, function (err, response, body) {
-    let parsedBody = JSON.parse(body);
-
-    if(err) {
-      deferred.reject(err);
-    } else if (parsedBody.error) {
-      deferred.reject(parsedBody.error_description);
-    } else {
-      deferred.resolve(parsedBody.access_token);
+  return new Promise((resolve, reject) => {
+    let requestParams = {
+      grant_type: 'client_credentials',
+      client_id: process.env.AZURE_AD_CLIENT_ID,
+      client_secret: process.env.AZURE_AD_CLIENT_SECRET,
+      resource: 'https://graph.microsoft.com'
     }
-  })
-};
+  
+    request.post({ url: 'https://login.microsoftonline.com/pkmgarciagmail.onmicrosoft.com/oauth2/token', form: requestParams }, function (err, response, body) {
+      let parsedBody = JSON.parse(body);
+
+      if(err) {
+        reject(err);
+      } else if (parsedBody.error) {
+        reject(parsedBody.error_description);
+      } else {
+        resolve(parsedBody.access_token);
+      }
+    })
+  });
+}
 
 const user = {
   getMe: (accessToken) => {
@@ -71,29 +70,32 @@ const user = {
 
 const superadmin = {
   createUser: (empNo) => {
-    getAccessToken()
-      .then((token) => {
-        const client = getAuthenticatedClient(token);
+    return new Promise((resolve, reject) => {
+      getAccessToken()
+        .then((token) => {
+          const client = getAuthenticatedClient(token);
 
-        return client
-                 .api('/users')
-                 .post({
-                   accountEnabled: true,
-                   displayName: empNo,
-                   mailNickname: empNo,
-                   userPrincipalName: `${empNo}@pkmgarciagmail.onmicrosoft.com`,
-                   passwordProfile: {
-                     forceChangePasswordNextSignIn: true,
-                     password: 'Thisishard375'
-                   }
-                 }, (err, res) => {
-                   if (err) return err;
-                   else {
-                     db.addOIDToEmployee(res.id, empNo);
-                     return res;
-                   }
-                 });
-      });
+          client
+            .api('/users')
+            .post({
+              accountEnabled: true,
+              displayName: empNo.toString(),
+              mailNickname: empNo.toString(),
+              userPrincipalName: `${empNo}@pkmgarciagmail.onmicrosoft.com`,
+              passwordProfile: {
+                forceChangePasswordNextSignIn: true,
+                password: 'Thisishard375'
+              }
+            }, (err, res) => {
+              console.log(err, res);
+              if (err) reject(err);
+              else {
+                db.addOIDToEmployee(res.id, empNo);
+                resolve(res);
+              }
+            });
+        });
+    });
   }
 };
 

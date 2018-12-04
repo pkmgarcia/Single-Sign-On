@@ -50,6 +50,7 @@ const getEmployeeUsingOID = (oid) => {
           hireDate: tuple.hire_date,
           departments,
           oid,
+          userPrincipleName: tuple.user_principle_name,
           oauth: {
             tokenType: tuple.token_type,
             expiresIn: tuple.expires_in,
@@ -114,6 +115,7 @@ const getEmployeeUsingEmployeeNumber = (empNo) => {
           hireDate: tuple.hire_date,
           oid: tuple.oid,
           departments,
+          userPrincipleName: tuple.user_principle_name,
           oauth: {
             tokenType: tuple.token_type,
             expiresIn: tuple.expires_in,
@@ -172,6 +174,7 @@ const getEmployees = (lowerBound, limit) => {
             hireDate: tuple.hire_date,
             oid: tuple.oid,
             department: tuple.dept_name,
+            userPrincipleName: tuple.user_principle_name,
             oauth: {
               tokenType: tuple.token_type,
               expiresIn: tuple.expires_in,
