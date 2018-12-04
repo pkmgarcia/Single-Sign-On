@@ -130,6 +130,7 @@ class MainLayout extends Component {
               <MenuIcon />
             </IconButton>
             <Button
+              href="https://login.microsoftonline.com/pkmgarciagmail.onmicrosoft.com/oauth2/logout?post_logout_redirect_uri=https%3A%2F%2F98.207.137.133%3A8000"
               onClick={this.logout}
               className={classes.logoutButton}
             >
