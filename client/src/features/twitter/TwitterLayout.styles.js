@@ -5,7 +5,14 @@ const styles = theme => ({
     padding: '32px'
   },
   tweeter: {
-    margin: '32px'
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    justifyContent: 'center',
+    margin: '16px'
+  },
+  tweeterButton: {
+    flex: 'none',
+    margin: '16px'
   },
   tweets: {
     margin: '32px'

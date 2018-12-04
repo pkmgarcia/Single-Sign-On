@@ -10,25 +10,25 @@ import ChatIcon from '@material-ui/icons/Chat';
 import styles from './TwitterLayout.styles';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
-import {initiateTwitterOAuth, getLatestTweets} from '../../modules/axios/twitter';
+import { getLatestTweets, postStatus } from '../../modules/axios/twitter';
 
 class TwitterLayout extends Component {
   state = {
-    tweets: [ ]
+    tweets: [ ],
+    status: ''
   }
 
-  handleChange = (key) => (value) => this.setState({ key: value });
+  handleChange = (key) => (value) => this.setState({ [key]: value });
 
   componentDidMount() {    
     getLatestTweets()
       .then(res => {
-        console.log(res);
         const tweets = [];
-        for(let i = 0; i < res.data.statuses.length; i++){
+        for(let i = 0; i < res.data.length; i++){
           const tweet = {
-            userName: res.data.statuses[i].user.screen_name,
-            text: res.data.statuses[i].text,
-            postdate: res.data.statuses[i].created_at
+            userName: res.data[i].user.screen_name,
+            text: res.data[i].text,
+            postdate: res.data[i].created_at
           };  
           tweets.push(tweet);  
         }
@@ -63,23 +63,46 @@ class TwitterLayout extends Component {
     }
 
     const tweeter = (
-      <div className={classes.searchBar}>
+      <div className={classes.tweeter}>
         <TextField
           id="tweet"
           value={this.state.query}
-          onChange={event => this.handleChange('query')(event.target.value)}
+          onChange={event => this.handleChange('status')(event.target.value)}
           variant="outlined"
           margin="normal"
           label="Tweet"
           fullWidth
         />
         <IconButton
-          className={classes.searchButton}
-          onClick={() => this.fetchEmployeeByID(this.state.query)}
+          className={classes.tweeterButton}
+          onClick={() => postStatus(this.state.status)}
           variant="contained"
           color="secondary"
         > <ChatIcon/>
         </IconButton>
+      </div>
+    );
+
+    const tweets = (
+      <div className={classes.tweets}>
+        {this.state.tweets.map((tweet, index) => {
+          return (
+            <Paper
+              className={classes.tweet}
+              key={index}
+            >
+              <Typography variant="h6" component="h3" color="primary">
+                Tweet: {tweet.text}
+              </Typography>
+              <Typography variant="body1" component="p" color="textPrimary">
+                Posted by: {tweet.userName}
+              </Typography>
+              <Typography component="p">
+                Posted on: {tweet.postdate}
+              </Typography>
+            </Paper>
+          );
+        })}
       </div>
     );
 
@@ -91,31 +114,8 @@ class TwitterLayout extends Component {
         > Twitter
         </Typography>
         <Divider />
-
-        <div className={classes.tweeter}>
-          {tweeter}
-        </div>
-
-        <div className={classes.tweets}>
-          {this.state.tweets.map((tweet, index) => {
-            return (
-              <Paper
-                className={classes.tweet}
-                key={index}
-              >
-                <Typography variant="h6" component="h3" color="primary">
-                  Tweet: {tweet.text}
-                </Typography>
-                <Typography variant="body1" component="p" color="textPrimary">
-                  Posted by: {tweet.userName}
-                </Typography>
-                <Typography component="p">
-                  Posted on: {tweet.postdate}
-                </Typography>
-              </Paper>
-            );
-          })}
-        </div>
+        {tweeter}
+        {tweets}
       </div>
     )
   }

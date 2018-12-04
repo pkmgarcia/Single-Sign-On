@@ -36,12 +36,21 @@ router.use('/oauth/callback',
 // Gets the ten most recent tweets that use the hashtag 'payroll'
 router.get('/latest-tweets', function (req, res) {
   const params = {
-    q: '#payroll',
-    count: '1',
-    result_type: 'recent'
+    count: 20
   };
-  twitterClient.get('/search/tweets', params, function(error, tweets, response) {
+  twitterClient.get('/statuses/user_timeline', params, function(error, tweets, response) {
     res.status(200).send(tweets);
+  });
+});
+
+router.post('/tweet', function (req, res) {
+  const params = {
+    status: req.body.status
+  };
+  twitterClient.post('/statuses/update', params, function(error, tweet, response) {
+    if (error) res.send(error);
+    if (tweet) console.log(tweet);
+    if (response) res.send(response);
   });
 });
 module.exports = router;

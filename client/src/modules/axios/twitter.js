@@ -7,10 +7,11 @@ const twitterInstance = axios.create({
   baseURL: `${baseURL}${api}`
 });
 
-const initiateTwitterOAuth = () => twitterInstance.get('/oauth');
 const getLatestTweets = () => twitterInstance.get('/latest-tweets');
 
+const postStatus = (status) => twitterInstance.post('/tweet', { status });
+
 export {
-  initiateTwitterOAuth,
-  getLatestTweets
+  getLatestTweets,
+  postStatus
 };
