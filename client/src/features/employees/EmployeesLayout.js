@@ -25,6 +25,26 @@ class EmployeesLayout extends Component {
     searched: false,
   }
 
+  /*
+  default = {
+    employees: [
+      {
+        empNo: 0,
+        firstName: 'Patrick',
+        lastName: 'Garcia',
+        department: 'Sales',
+        userPrincipalName: 'pkmgarcia@pkmgarciagmail.onmicrosoft.com'
+      },
+      {
+        empNo: 10,
+        firstName: 'Zubia',
+        lastName: 'Ahmad',
+        department: 'Marketing'
+      }
+    ]
+  };
+  */
+
   handleChange = (key) => (value) => this.setState({ [key]: value });
   getPreviousEmployees = () => {
     if (this.state.searched) {
