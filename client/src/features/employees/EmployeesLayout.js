@@ -12,51 +12,81 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
-import { employeeCRUD } from '../../modules/axios';
 import styles from './EmployeesLayout.styles';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
 import { getEmployeeByID, getEmployees }from '../../modules/axios/mysql';
+import { createUser } from '../../modules/axios/graph';
 
 class EmployeesLayout extends Component {
   state = {
     employees: [],
-    paginationOffset: 0,
-    query: ''
+    query: '',
+    searched: false,
   }
 
-  handleChange = (key) => (value) => this.setState({ key: value });
+  handleChange = (key) => (value) => this.setState({ [key]: value });
   getPreviousEmployees = () => {
-    if (this.state.paginationOffset > 4) {
-      const newPaginationOffset = this.state.paginationOffset - 10;
-      getEmployees(this.state.paginationOffset)
+    if (this.state.searched) {
+      getEmployees(9999)
         .then(res => {
-          this.setState({ employees: res });
-          this.setState({ paginationOffset: newPaginationOffset });
+          this.setState({
+            employees: res.data,
+            searched: false
+          });
         });
+    }
+    else {
+      if (this.state.employees.length > 0 && this.state.employees[0].empNo > 10010) {
+        const offset = this.state.employees[0].empNo - 10;
+        getEmployees(offset)
+          .then(res => {
+            this.setState({
+              employees: res.data
+            });
+          });
+      }
     }
   }
   getNextEmployees = () => {
-    const newPaginationOffset = this.state.paginationOffset + 10;
-    getEmployees(this.state.paginationOffset)
-      .then(res => {
-        this.setState({ employees: res });
-        this.setState({ paginationOffset: newPaginationOffset });
-      });
+    if (this.state.searched) {
+      getEmployees(9999)
+        .then(res => {
+          this.setState({
+            employees: res.data,
+            searched: false
+          });
+        });
+    }
+    else {
+      if (this.state.employees.length > 0) {
+        const offset = this.state.employees[0].empNo + 10;
+        getEmployees(offset)
+          .then(res => {
+            this.setState({
+              employees: res.data
+            });
+          });
+      }
+    }
   }
   fetchEmployeeByID = (empNo) => {
     getEmployeeByID(empNo)
       .then(res => {
         const employees = [];
-        employees.push(res);
-        this.setState({ employees });
+        if (res.status == 200) {
+          employees.push(res.data);
+        }
+        this.setState({ employees, searched: true });
       });
   }
 
   componentDidMount() {
-    getEmployees(0)
+    getEmployees(9999)
       .then(res => {
-        this.setState({ employees: res });
+        this.setState({
+          employees: res.data
+        });
       });
   }
 
@@ -91,7 +121,7 @@ class EmployeesLayout extends Component {
         <TextField
           id="search"
           value={this.state.query}
-          onChange={this.handleChange('query')}
+          onChange={event => this.handleChange('query')(event.target.value)}
           variant="outlined"
           margin="normal"
           label="Employee ID"
@@ -107,6 +137,26 @@ class EmployeesLayout extends Component {
       </div>
     );
 
+    console.log(this.state.employees);
+    const tableBody = (
+      <TableBody>
+        {this.state.employees.map(employee => (
+          <TableRow>
+            <TableCell numeric>{employee.empNo}</TableCell>
+            <Hidden xsDown>
+              <TableCell>{`${employee.lastName}, ${employee.firstName}`}</TableCell>
+              <TableCell>{`${employee.department}`}</TableCell>
+            </Hidden>
+            <TableCell>
+              {employee.oid
+                ? 'MS Account'
+                : <Button onClick={() => createUser(employee.empNo)}>Add Account</Button>
+              }
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    );
     const table = (
       <Paper className={classes.table}>
         <Table>
@@ -118,8 +168,7 @@ class EmployeesLayout extends Component {
             </Hidden>
             <TableCell>MS Account</TableCell>
           </TableHead>
-          <TableBody>
-          </TableBody>
+          {tableBody}
         </Table>
       </Paper>
     );
@@ -127,12 +176,12 @@ class EmployeesLayout extends Component {
     const controls = (
       <div className={classes.controls}>
         <Button
-          onClick={() => ''}
+          onClick={this.getPreviousEmployees}
           variant="outlined"
         > Previous
         </Button>
         <Button
-          onClick={() => ''}
+          onClick={this.getNextEmployees}
           variant="outlined"
         > Next
         </Button>

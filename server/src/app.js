@@ -42,7 +42,7 @@ app.use(passport.session());
 // Set up routes
 app.use('/graph', routes.graph);
 app.use('/aad', routes.aad);
-app.use('/mysql', passport.authenticate('azuread-openidconnect', routes.mysql));
+app.use('/mysql', routes.mysql);
 app.use('/twitter', routes.twitter);
 
 // Start listening

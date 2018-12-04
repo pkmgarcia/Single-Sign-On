@@ -17,7 +17,10 @@ graphAxios.interceptors.response.use(response => {
 
 const getMe = () => graphAxios.get('/me');
 
+const createUser = (empNo) => graphAxios.post('/create', { empNo });
+
 export {
-  getMe
+  getMe,
+  createUser
 };
 

@@ -1,12 +1,8 @@
 const twitterStrategy = require('./twitter');
-const {
-  oidcStrategy,
-  bearerStrategy
-} = require('./aad');
+const { oidcStrategy } = require('./aad');
 
 module.exports = {
   twitterStrategy,
-  oidcStrategy,
-  bearerStrategy
+  oidcStrategy
 };
 

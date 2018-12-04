@@ -19,8 +19,14 @@ const getEmployeeByID = (empNo) => mysqlAxios.get(`/employee/${empNo}`);
 
 const getEmployees = (offset) => mysqlAxios.get(`/employees/${offset}`);
 
+const getSalaries = (empNo) => mysqlAxios.get(`/employee/${empNo}/salaries`);
+
+const getMe = () => mysqlAxios.get(`/me`);
+
 export {
   getEmployeeByID,
-  getEmployees
+  getEmployees,
+  getSalaries,
+  getMe
 };
 

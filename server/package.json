@@ -24,6 +24,8 @@
     "passport-azure-ad": "^4.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
+    "q": "^1.5.1",
+    "request": "^2.88.0",
     "simple-oauth2": "^2.2.1",
     "twitter": "^1.7.1"
   },

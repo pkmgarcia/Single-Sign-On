@@ -37,7 +37,7 @@ router.use('/oauth/callback',
 router.get('/latest-tweets', function (req, res) {
   const params = {
     q: '#payroll',
-    count: '10',
+    count: '1',
     result_type: 'recent'
   };
   twitterClient.get('/search/tweets', params, function(error, tweets, response) {

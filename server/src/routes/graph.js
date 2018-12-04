@@ -34,10 +34,18 @@ router.get('/me',
 router.get('/groups',
   function(req, res) {
     if (req.isAuthenticated()) {
-      graph.user.getGroups(req.user.oauth.accessToken)
+      graph.user.getMemberOf(req.user.oauth.accessToken)
         .then(groups => {
           console.log(groups);
         });
+    }
+  }
+);
+
+router.post('/create',
+  function(req, res) {
+    if (req.isAuthenticated()) {
+      graph.superadmin.createUser(req.body.empNo)
     }
   }
 );

@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
-import { getMe } from '../../modules/axios/graph';
+import { getMe } from '../../modules/axios/mysql';
 import { userTypes } from '../../modules/redux/reducers/user';
 import { connect } from 'react-redux';
 import styles from './SplashLayout.styles';
@@ -69,7 +69,7 @@ class SplashLayout extends Component {
                  align="center"
                  color="secondary"
                  noWrap
-               > Authenticating...
+               > Fetching employee information...
                </Typography>)
             : (<Button
                  variant="outlined"

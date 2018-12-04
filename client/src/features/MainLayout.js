@@ -16,6 +16,7 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import TwitterLayout from './twitter/TwitterLayout';
 import JenkinsLayout from './jenkins/JenkinsLayout';
+import SalariesLayout from './salaries/SalariesLayout';
 import EmployeesLayout from './employees/EmployeesLayout';
 import { withStyles } from '@material-ui/core/styles';
 import { signOut } from '../modules/axios/auth';
@@ -59,44 +60,64 @@ class MainLayout extends Component {
        </div>)
     : null
 
+    console.log(this.props.user);
+
     const navLinks = (
       <div className={classes.navLinks}>
         <NavLink
           className={classes.navLink}
           activeClassName={classes.activeNavLink}
-          to="/twitter"
+          to="/payroll"
         >
           <Button
             fullWidth
             color="inherit"
             variant="flat"
             onClick={this.toggleDrawer}
-          > Twitter </Button>
+          > Payroll </Button>
         </NavLink>
-        <NavLink
-          className={classes.navLink}
-          activeClassName={classes.activeNavLink}
-          to="/employees"
-        >
-          <Button
-            fullWidth
-            color="inherit"
-            variant="flat"
-            onClick={this.toggleDrawer}
-          > Employees </Button>
-        </NavLink>
-        <NavLink
-          className={classes.navLink}
-          activeClassName={classes.activeNavLink}
-          to="/jenkins"
-        >
-          <Button
-            fullWidth
-            color="inherit"
-            variant="flat"
-            onClick={this.toggleDrawer}
-          > Jenkins </Button>
-        </NavLink>
+        {employee.departments.find(el => el === 'Marketing')
+          ? (<NavLink
+               className={classes.navLink}
+               activeClassName={classes.activeNavLink}
+               to="/twitter"
+             >
+               <Button
+                 fullWidth
+                 color="inherit"
+                 variant="flat"
+                 onClick={this.toggleDrawer}
+               > Twitter </Button>
+             </NavLink>)
+          : null}
+        {employee.departments.find(el => el === 'Human Resources')
+          ? (<NavLink
+               className={classes.navLink}
+               activeClassName={classes.activeNavLink}
+               to="/employees"
+             >
+               <Button
+                 fullWidth
+                 color="inherit"
+                 variant="flat"
+                 onClick={this.toggleDrawer}
+               > Employees </Button>
+             </NavLink>)
+          : null}
+        {employee.departments.find(el => el === 'Development')
+          ? (<NavLink
+               className={classes.navLink}
+               activeClassName={classes.activeNavLink}
+               to="/jenkins"
+             >
+               <Button
+                 fullWidth
+                 color="inherit"
+                 variant="flat"
+                 onClick={this.toggleDrawer}
+               > Jenkins </Button>
+             </NavLink>)
+          : null}
       </div>
     );
 
@@ -139,10 +160,11 @@ class MainLayout extends Component {
           {drawerContent}
         </Drawer>
         <Switch>
-          <Route path="/twitter" component={TwitterLayout} />
-          <Route path="/jenkins" component={JenkinsLayout} />
-          <Route path="/employees" component={EmployeesLayout} />
-          <Redirect exact path="/" to="/twitter"/>
+          <Route path="/payroll" render={() => <SalariesLayout user={this.props.user} />} />
+          <Route path="/twitter" render={() => <TwitterLayout user={this.props.user} />} />
+          <Route path="/jenkins" render={() => <JenkinsLayout user={this.props.user} />} />
+          <Route path="/employees" render={() => <EmployeesLayout user={this.props.user} />} />
+          <Redirect exact path="/" to="/payroll"/>
         </Switch>
       </div>
     )
