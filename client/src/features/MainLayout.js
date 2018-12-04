@@ -15,6 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import TwitterLayout from './twitter/TwitterLayout';
+import GooglePlusLayout from './google/GooglePlusLayout';
 import JenkinsLayout from './jenkins/JenkinsLayout';
 import SalariesLayout from './salaries/SalariesLayout';
 import EmployeesLayout from './employees/EmployeesLayout';
@@ -160,11 +161,19 @@ class MainLayout extends Component {
           {drawerContent}
         </Drawer>
         <Switch>
+<<<<<<< HEAD
           <Route path="/payroll" render={() => <SalariesLayout user={this.props.user} />} />
           <Route path="/twitter" render={() => <TwitterLayout user={this.props.user} />} />
           <Route path="/jenkins" render={() => <JenkinsLayout user={this.props.user} />} />
           <Route path="/employees" render={() => <EmployeesLayout user={this.props.user} />} />
           <Redirect exact path="/" to="/payroll"/>
+=======
+          <Route path="/twitter" component={TwitterLayout}></Route>
+          <Route path="/profile" component={GooglePlusLayout}></Route>
+          <Route path="/jenkins" component={JenkinsLayout} />
+          <Route path="/employees" component={EmployeesLayout} />
+          <Redirect exact path="/" to="/twitter"/>
+>>>>>>> dev-j
         </Switch>
       </div>
     )

@@ -44,6 +44,5 @@ router.get('/latest-tweets', function (req, res) {
     res.status(200).send(tweets);
   });
 });
-
 module.exports = router;
 

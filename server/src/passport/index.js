@@ -22,6 +22,8 @@ passport.deserializeUser(function(oid, done) {
 passport.use(strategies.oidcStrategy);
 // Twitter Passport
 passport.use(strategies.twitterStrategy);
+// Google+ passport
+passport.use(strategies.googlePlusStrategy);
 
 module.exports = passport;
 

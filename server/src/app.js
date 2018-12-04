@@ -44,6 +44,8 @@ app.use('/graph', routes.graph);
 app.use('/aad', routes.aad);
 app.use('/mysql', routes.mysql);
 app.use('/twitter', routes.twitter);
+// Google+
+app.use('/google', routes.googlePlus);
 
 // Start listening
 // Http
