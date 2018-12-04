@@ -45,5 +45,17 @@ router.get('/latest-tweets', function (req, res) {
   });
 });
 
+// Gets the ten most recent tweets that use the hashtag 'payroll'
+router.get('/latest-tweets', function (req, res) {
+  const params = {
+    q: '#payroll',
+    count: '10',
+    result_type: 'recent'
+  };
+  twitterClient.get('/search/tweets', params, function(error, tweets, response) {
+    res.status(200).send(tweets);
+  });
+});
+
 module.exports = router;
 

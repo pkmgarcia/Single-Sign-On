@@ -99,7 +99,7 @@ class TwitterLayout extends Component {
           text: res.data.statuses[i].text,
           postdate: res.data.statuses[i].created_at
         };  
-        tweets[i].push(tweet);  
+        tweets.push(tweet);  
       }
       this.setState({ tweets });
     });  
