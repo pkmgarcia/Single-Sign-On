@@ -1,4 +1,6 @@
 # Single-Sign-On
+[Demo](https://youtu.be/XO55j96oCmo). (YouTube)
+
 A proof-of-concept, MERN stack web application that features single sign-on authentication/authorization. Created for Enterprise Software Platforms (CMPE172) at San Jose State University.
 
 # About
